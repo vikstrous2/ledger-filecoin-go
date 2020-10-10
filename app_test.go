@@ -19,12 +19,13 @@ package ledger_filecoin_go
 import (
 	"encoding/hex"
 	"fmt"
+	"testing"
+
 	"github.com/btcsuite/btcd/btcec"
 	"github.com/ipsn/go-secp256k1"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/crypto/blake2b"
-	"testing"
 )
 
 // Ledger Test Mnemonic: equip will roof matter pink blind book anxiety banner elbow sun young
@@ -46,7 +47,7 @@ func Test_UserGetVersion(t *testing.T) {
 	}
 	defer app.Close()
 
-	app.api.Logging = true
+	//app.api.Logging = true
 
 	version, err := app.GetVersion()
 	require.Nil(t, err, "Detected error")
@@ -65,7 +66,7 @@ func Test_UserGetPublicKey(t *testing.T) {
 	}
 	defer app.Close()
 
-	app.api.Logging = true
+	//app.api.Logging = true
 
 	path := []uint32{44, 461, 5, 0, 21}
 

@@ -40,7 +40,7 @@ const HardenCount int = 2
 
 // LedgerFilecoin represents a connection to the Ledger app
 type LedgerFilecoin struct {
-	api     *ledger_go.Ledger
+	api     ledger_go.LedgerDevice
 	version VersionInfo
 }
 
@@ -61,8 +61,9 @@ func (sa *SignatureAnswer) SignatureBytes() []byte {
 
 // Displays existing Ledger Filecoin apps by address
 func ListFilecoinDevices(path []uint32) {
-	for i := uint(0); i < ledger_go.CountLedgerDevices(); i += 1 {
-		ledgerDevice, err := ledger_go.GetLedger(i)
+	hid := ledger_go.NewLedgerAdmin()
+	for i := 0; i < hid.CountDevices(); i++ {
+		ledgerDevice, err := hid.Connect(i)
 		if err != nil {
 			continue
 		}
@@ -89,8 +90,9 @@ func ListFilecoinDevices(path []uint32) {
 
 // ConnectLedgerFilecoinApp connects to Filecoin app based on address
 func ConnectLedgerFilecoinApp(seekingAddress string, path []uint32) (*LedgerFilecoin, error) {
-	for i := uint(0); i < ledger_go.CountLedgerDevices(); i += 1 {
-		ledgerDevice, err := ledger_go.GetLedger(i)
+	hid := ledger_go.NewLedgerAdmin()
+	for i := 0; i < hid.CountDevices(); i += 1 {
+		ledgerDevice, err := hid.Connect(i)
 		if err != nil {
 			continue
 		}
@@ -110,7 +112,8 @@ func ConnectLedgerFilecoinApp(seekingAddress string, path []uint32) (*LedgerFile
 
 // FindLedgerFilecoinApp finds the Filecoin app running in a Ledger device
 func FindLedgerFilecoinApp() (*LedgerFilecoin, error) {
-	ledgerAPI, err := ledger_go.FindLedger()
+	hid := ledger_go.NewLedgerAdmin()
+	ledgerAPI, err := hid.Connect(0)
 
 	if err != nil {
 		return nil, err
