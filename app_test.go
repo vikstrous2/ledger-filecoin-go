@@ -21,7 +21,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/btcsuite/btcd/btcec"
+	"github.com/btcsuite/btcd/btcec/v2"
 	"github.com/ipsn/go-secp256k1"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
